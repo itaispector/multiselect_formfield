@@ -27,38 +27,40 @@ class MultiSelectFormField extends FormField<dynamic> {
   final Color checkBoxCheckColor;
   final Color checkBoxActiveColor;
   final bool enabled;
+  final EdgeInsets contentPadding;
 
-  MultiSelectFormField({
-    FormFieldSetter<dynamic> onSaved,
-    FormFieldValidator<dynamic> validator,
-    dynamic initialValue,
-    bool autovalidate = false,
-    this.title = const Text('Title'),
-    this.hintWidget = const Text('Tap to select one or more'),
-    this.required = false,
-    this.errorText = 'Please select one or more options',
-    this.leading,
-    this.dataSource,
-    this.textField,
-    this.valueField,
-    this.change,
-    this.open,
-    this.close,
-    this.okButtonLabel = 'OK',
-    this.cancelButtonLabel = 'CANCEL',
-    this.fillColor,
-    this.border,
-    this.trailing,
-    this.chipLabelStyle,
-    this.enabled = true,
-    this.chipBackGroundColor,
-    this.dialogTextStyle = const TextStyle(),
-    this.dialogShapeBorder = const RoundedRectangleBorder(
-      borderRadius: BorderRadius.all(Radius.circular(0.0)),
-    ),
-    this.checkBoxActiveColor,
-    this.checkBoxCheckColor,
-  }) : super(
+  MultiSelectFormField(
+      {FormFieldSetter<dynamic> onSaved,
+      FormFieldValidator<dynamic> validator,
+      dynamic initialValue,
+      bool autovalidate = false,
+      this.title = const Text('Title'),
+      this.hintWidget = const Text('Tap to select one or more'),
+      this.required = false,
+      this.errorText = 'Please select one or more options',
+      this.leading,
+      this.dataSource,
+      this.textField,
+      this.valueField,
+      this.change,
+      this.open,
+      this.close,
+      this.okButtonLabel = 'OK',
+      this.cancelButtonLabel = 'CANCEL',
+      this.fillColor,
+      this.border,
+      this.trailing,
+      this.chipLabelStyle,
+      this.enabled = true,
+      this.chipBackGroundColor,
+      this.dialogTextStyle = const TextStyle(),
+      this.dialogShapeBorder = const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(Radius.circular(0.0)),
+      ),
+      this.checkBoxActiveColor,
+      this.checkBoxCheckColor,
+      this.contentPadding = const EdgeInsets.all(16)})
+      : super(
           onSaved: onSaved,
           validator: validator,
           initialValue: initialValue,
@@ -67,8 +69,6 @@ class MultiSelectFormField extends FormField<dynamic> {
             // return Text((state.value as List).join(', '));
             List<Widget> _buildSelectedOptions(state) {
               List<Widget> selectedOptions = [];
-              print(state.value);
-              ;
               if (state.value != null) {
                 state.value.forEach((item) {
                   var existingItem = dataSource.singleWhere(
@@ -125,6 +125,7 @@ class MultiSelectFormField extends FormField<dynamic> {
                     },
               child: InputDecorator(
                 decoration: InputDecoration(
+                  contentPadding: contentPadding,
                   filled: true,
                   errorText: state.hasError ? state.errorText : null,
                   errorMaxLines: 4,
