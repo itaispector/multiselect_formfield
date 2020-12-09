@@ -34,7 +34,7 @@ class _MyHomePageState extends State<MyHomePage> {
     if (form.validate()) {
       form.save();
       setState(() {
-        _myActivitiesResult = _myActivities.toString();
+        _myActivitiesResult = _myActivities.join(', ');
       });
     }
   }
@@ -63,8 +63,8 @@ class _MyHomePageState extends State<MyHomePage> {
                   dialogShapeBorder: RoundedRectangleBorder(
                       borderRadius: BorderRadius.all(Radius.circular(12.0))),
                   title: Text(
-                    "My workouts",
-                    style: TextStyle(fontSize: 16),
+                    "Parameter",
+                    style: TextStyle(fontSize: 12),
                   ),
                   validator: (value) {
                     if (value == null || value.length == 0) {

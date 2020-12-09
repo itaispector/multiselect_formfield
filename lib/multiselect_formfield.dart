@@ -64,65 +64,65 @@ class MultiSelectFormField extends FormField<dynamic> {
           initialValue: initialValue,
           autovalidate: autovalidate,
           builder: (FormFieldState<dynamic> state) {
+            // return Text((state.value as List).join(', '));
             List<Widget> _buildSelectedOptions(state) {
               List<Widget> selectedOptions = [];
-
+              print(state.value);
+              ;
               if (state.value != null) {
                 state.value.forEach((item) {
                   var existingItem = dataSource.singleWhere(
                       (itm) => itm[valueField] == item,
                       orElse: () => null);
-                  selectedOptions.add(Chip(
-                    labelStyle: chipLabelStyle,
-                    backgroundColor: chipBackGroundColor,
-                    label: Text(
-                      existingItem[textField],
-                      overflow: TextOverflow.ellipsis,
-                      // style: TextStyle(color: Colors.red),
-                    ),
+                  selectedOptions.add(Text(
+                    existingItem[textField],
+                    overflow: TextOverflow.ellipsis,
+                    // style: TextStyle(color: Colors.red),
                   ));
                 });
               }
 
-              return selectedOptions;
+              // return selectedOptions;
+              return [Text((state.value as List).join(', '))];
             }
 
             return InkWell(
+              onTap: !enabled
+                  ? null
+                  : () async {
+                      List initialSelected = state.value;
+                      if (initialSelected == null) {
+                        initialSelected = List();
+                      }
 
-              onTap:  !enabled ? null :() async {
-                List initialSelected = state.value;
-                if (initialSelected == null) {
-                  initialSelected = List();
-                }
+                      final items = List<MultiSelectDialogItem<dynamic>>();
+                      dataSource.forEach((item) {
+                        items.add(MultiSelectDialogItem(
+                            item[valueField], item[textField]));
+                      });
 
-                final items = List<MultiSelectDialogItem<dynamic>>();
-                dataSource.forEach((item) {
-                  items.add(
-                      MultiSelectDialogItem(item[valueField], item[textField]));
-                });
+                      List selectedValues = await showDialog<List>(
+                        context: state.context,
+                        builder: (BuildContext context) {
+                          return MultiSelectDialog(
+                            title: title,
+                            okButtonLabel: okButtonLabel,
+                            cancelButtonLabel: cancelButtonLabel,
+                            items: items,
+                            initialSelectedValues: initialSelected,
+                            labelStyle: dialogTextStyle,
+                            dialogShapeBorder: dialogShapeBorder,
+                            checkBoxActiveColor: checkBoxActiveColor,
+                            checkBoxCheckColor: checkBoxCheckColor,
+                          );
+                        },
+                      );
 
-                List selectedValues = await showDialog<List>(
-                  context: state.context,
-                  builder: (BuildContext context) {
-                    return MultiSelectDialog(
-                      title: title,
-                      okButtonLabel: okButtonLabel,
-                      cancelButtonLabel: cancelButtonLabel,
-                      items: items,
-                      initialSelectedValues: initialSelected,
-                      labelStyle: dialogTextStyle,
-                      dialogShapeBorder: dialogShapeBorder,
-                      checkBoxActiveColor: checkBoxActiveColor,
-                      checkBoxCheckColor: checkBoxCheckColor,
-                    );
-                  },
-                );
-
-                if (selectedValues != null) {
-                  state.didChange(selectedValues);
-                  state.save();
-                }
-              },
+                      if (selectedValues != null) {
+                        state.didChange(selectedValues);
+                        state.save();
+                      }
+                    },
               child: InputDecorator(
                 decoration: InputDecoration(
                   filled: true,
