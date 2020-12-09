@@ -28,6 +28,7 @@ class MultiSelectFormField extends FormField<dynamic> {
   final Color checkBoxActiveColor;
   final bool enabled;
   final EdgeInsets contentPadding;
+  final String label;
 
   MultiSelectFormField(
       {FormFieldSetter<dynamic> onSaved,
@@ -59,6 +60,7 @@ class MultiSelectFormField extends FormField<dynamic> {
       ),
       this.checkBoxActiveColor,
       this.checkBoxCheckColor,
+      this.label,
       this.contentPadding = const EdgeInsets.all(16)})
       : super(
           onSaved: onSaved,
@@ -86,98 +88,94 @@ class MultiSelectFormField extends FormField<dynamic> {
               return [Text((state.value as List).join(', '))];
             }
 
-            return InkWell(
-              onTap: !enabled
-                  ? null
-                  : () async {
-                      List initialSelected = state.value;
-                      if (initialSelected == null) {
-                        initialSelected = List();
-                      }
+            return Opacity(
+                opacity: enabled ? 1.0 : 0.5,
+                child: InkWell(
+                  onTap: !enabled
+                      ? null
+                      : () async {
+                          List initialSelected = state.value;
+                          if (initialSelected == null) {
+                            initialSelected = List();
+                          }
 
-                      final items = List<MultiSelectDialogItem<dynamic>>();
-                      dataSource.forEach((item) {
-                        items.add(MultiSelectDialogItem(
-                            item[valueField], item[textField]));
-                      });
+                          final items = List<MultiSelectDialogItem<dynamic>>();
+                          dataSource.forEach((item) {
+                            items.add(MultiSelectDialogItem(
+                                item[valueField], item[textField]));
+                          });
 
-                      List selectedValues = await showDialog<List>(
-                        context: state.context,
-                        builder: (BuildContext context) {
-                          return MultiSelectDialog(
-                            title: title,
-                            okButtonLabel: okButtonLabel,
-                            cancelButtonLabel: cancelButtonLabel,
-                            items: items,
-                            initialSelectedValues: initialSelected,
-                            labelStyle: dialogTextStyle,
-                            dialogShapeBorder: dialogShapeBorder,
-                            checkBoxActiveColor: checkBoxActiveColor,
-                            checkBoxCheckColor: checkBoxCheckColor,
+                          List selectedValues = await showDialog<List>(
+                            context: state.context,
+                            builder: (BuildContext context) {
+                              return MultiSelectDialog(
+                                title: title,
+                                okButtonLabel: okButtonLabel,
+                                cancelButtonLabel: cancelButtonLabel,
+                                items: items,
+                                initialSelectedValues: initialSelected,
+                                labelStyle: dialogTextStyle,
+                                dialogShapeBorder: dialogShapeBorder,
+                                checkBoxActiveColor: checkBoxActiveColor,
+                                checkBoxCheckColor: checkBoxCheckColor,
+                              );
+                            },
                           );
-                        },
-                      );
 
-                      if (selectedValues != null) {
-                        state.didChange(selectedValues);
-                        state.save();
-                      }
-                    },
-              child: InputDecorator(
-                decoration: InputDecoration(
-                  contentPadding: contentPadding,
-                  filled: true,
-                  errorText: state.hasError ? state.errorText : null,
-                  errorMaxLines: 4,
-                  fillColor: fillColor ?? Theme.of(state.context).canvasColor,
-                  border: border ?? UnderlineInputBorder(),
-                ),
-                isEmpty: state.value == null || state.value == '',
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Padding(
-                      padding: EdgeInsets.fromLTRB(0, 2, 0, 0),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Expanded(
-                            child: title,
-                          ),
-                          required
-                              ? Padding(
-                                  padding: EdgeInsets.only(top: 5, right: 5),
-                                  child: Text(
-                                    ' *',
-                                    style: TextStyle(
-                                      color: Colors.red.shade700,
-                                      fontSize: 17.0,
-                                    ),
-                                  ),
-                                )
-                              : Container(),
-                          Icon(
-                            Icons.arrow_drop_down,
-                            color: Colors.black87,
-                            size: 25.0,
-                          ),
-                        ],
-                      ),
+                          if (selectedValues != null) {
+                            state.didChange(selectedValues);
+                            state.save();
+                          }
+                        },
+                  child: InputDecorator(
+                    decoration: InputDecoration(
+                      labelText: label,
+                      contentPadding: contentPadding,
+                      filled: true,
+                      errorText: state.hasError ? state.errorText : null,
+                      errorMaxLines: 4,
+                      fillColor:
+                          fillColor ?? Theme.of(state.context).canvasColor,
+                      border: border ?? UnderlineInputBorder(),
                     ),
-                    state.value != null && state.value.length > 0
-                        ? Wrap(
-                            spacing: 8.0,
-                            runSpacing: 0.0,
-                            children: _buildSelectedOptions(state),
-                          )
-                        : new Container(
-                            padding: EdgeInsets.only(top: 4),
-                            child: hintWidget,
-                          )
-                  ],
-                ),
-              ),
-            );
+                    isEmpty: state.value == null || state.value == '',
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        state.value != null && state.value.length > 0
+                            ? Flexible(
+                                child: Text(
+                                  (state.value as List).join(', '),
+                                ),
+                              )
+                            : new Container(
+                                padding: EdgeInsets.only(top: 4),
+                                child: hintWidget,
+                              ),
+                        Row(
+                          children: [
+                            if (required)
+                              Padding(
+                                padding: EdgeInsets.only(top: 5, right: 5),
+                                child: Text(
+                                  ' *',
+                                  style: TextStyle(
+                                    color: Colors.red.shade700,
+                                    fontSize: 17.0,
+                                  ),
+                                ),
+                              ),
+                            Icon(
+                              Icons.arrow_drop_down,
+                              color: Colors.black87,
+                              size: 25.0,
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
+                  ),
+                ));
           },
         );
 }

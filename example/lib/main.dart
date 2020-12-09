@@ -54,6 +54,8 @@ class _MyHomePageState extends State<MyHomePage> {
               Container(
                 padding: EdgeInsets.all(16),
                 child: MultiSelectFormField(
+                  contentPadding: EdgeInsets.zero,
+                  enabled: true,
                   autovalidate: false,
                   chipBackGroundColor: Colors.red,
                   chipLabelStyle: TextStyle(fontWeight: FontWeight.bold),
@@ -62,10 +64,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   checkBoxCheckColor: Colors.green,
                   dialogShapeBorder: RoundedRectangleBorder(
                       borderRadius: BorderRadius.all(Radius.circular(12.0))),
-                  title: Text(
-                    "Parameter",
-                    style: TextStyle(fontSize: 12),
-                  ),
+                  label: 'hey',
                   validator: (value) {
                     if (value == null || value.length == 0) {
                       return 'Please select one or more options';
