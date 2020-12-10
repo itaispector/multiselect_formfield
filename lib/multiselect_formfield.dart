@@ -29,6 +29,7 @@ class MultiSelectFormField extends FormField<dynamic> {
   final bool enabled;
   final EdgeInsets contentPadding;
   final String label;
+  final String displayString;
 
   MultiSelectFormField(
       {FormFieldSetter<dynamic> onSaved,
@@ -61,6 +62,7 @@ class MultiSelectFormField extends FormField<dynamic> {
       this.checkBoxActiveColor,
       this.checkBoxCheckColor,
       this.label,
+      this.displayString,
       this.contentPadding = const EdgeInsets.all(16)})
       : super(
           onSaved: onSaved,
@@ -68,26 +70,6 @@ class MultiSelectFormField extends FormField<dynamic> {
           initialValue: initialValue,
           autovalidate: autovalidate,
           builder: (FormFieldState<dynamic> state) {
-            // return Text((state.value as List).join(', '));
-            List<Widget> _buildSelectedOptions(state) {
-              List<Widget> selectedOptions = [];
-              if (state.value != null) {
-                state.value.forEach((item) {
-                  var existingItem = dataSource.singleWhere(
-                      (itm) => itm[valueField] == item,
-                      orElse: () => null);
-                  selectedOptions.add(Text(
-                    existingItem[textField],
-                    overflow: TextOverflow.ellipsis,
-                    // style: TextStyle(color: Colors.red),
-                  ));
-                });
-              }
-
-              // return selectedOptions;
-              return [Text((state.value as List).join(', '))];
-            }
-
             return Opacity(
                 opacity: enabled ? 1.0 : 0.5,
                 child: InkWell(
@@ -145,7 +127,8 @@ class MultiSelectFormField extends FormField<dynamic> {
                         state.value != null && state.value.length > 0
                             ? Flexible(
                                 child: Text(
-                                  (state.value as List).join(', '),
+                                  displayString ??
+                                      (state.value as List).join(', '),
                                 ),
                               )
                             : new Container(

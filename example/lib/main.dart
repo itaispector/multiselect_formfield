@@ -25,7 +25,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
-    _myActivities = [];
+    _myActivities = ['running'];
     _myActivitiesResult = '';
   }
 
@@ -64,7 +64,6 @@ class _MyHomePageState extends State<MyHomePage> {
                   checkBoxCheckColor: Colors.green,
                   dialogShapeBorder: RoundedRectangleBorder(
                       borderRadius: BorderRadius.all(Radius.circular(12.0))),
-                  label: 'hey',
                   validator: (value) {
                     if (value == null || value.length == 0) {
                       return 'Please select one or more options';
@@ -74,15 +73,15 @@ class _MyHomePageState extends State<MyHomePage> {
                   dataSource: [
                     {
                       "display": "Running",
-                      "value": "Running",
+                      "value": "running",
                     },
                     {
                       "display": "Climbing",
-                      "value": "Climbing",
+                      "value": "climibing",
                     },
                     {
                       "display": "Walking",
-                      "value": "Walking",
+                      "value": "walking",
                     },
                     {
                       "display": "Swimming",
@@ -109,6 +108,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   initialValue: _myActivities,
                   onSaved: (value) {
                     if (value == null) return;
+                    print(value);
                     setState(() {
                       _myActivities = value;
                     });
