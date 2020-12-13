@@ -33,6 +33,7 @@ class MultiSelectFormField extends FormField<dynamic> {
   final String displayString;
   final TextStyle dialogCancelStyle;
   final TextStyle dialogOKStyle;
+  final TextStyle textStyle;
 
   MultiSelectFormField(
       {FormFieldSetter<dynamic> onSaved,
@@ -59,6 +60,7 @@ class MultiSelectFormField extends FormField<dynamic> {
       this.enabled = true,
       this.chipBackGroundColor,
       this.dialogTextStyle = const TextStyle(),
+      this.textStyle = const TextStyle(),
       this.dialogShapeBorder = const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(0.0)),
       ),
@@ -136,6 +138,7 @@ class MultiSelectFormField extends FormField<dynamic> {
                                 child: Text(
                                   displayString ??
                                       (state.value as List).join(', '),
+                                  style: textStyle,
                                 ),
                               )
                             : new Container(
