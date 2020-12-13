@@ -1,6 +1,7 @@
 library multiselect_formfield;
 
 import 'package:flutter/material.dart';
+import 'package:hexcolor/hexcolor.dart';
 import 'package:multiselect_formfield/multiselect_dialog.dart';
 
 class MultiSelectFormField extends FormField<dynamic> {
@@ -156,8 +157,8 @@ class MultiSelectFormField extends FormField<dynamic> {
                             Icon(
                               Icons.arrow_drop_down,
                               color: enabled
-                                  ? Color.fromARGB(255, 380, 380, 380)
-                                  : Color.fromARGB(255, 741, 741, 741),
+                                  ? HexColor('#606160')
+                                  : HexColor('#bcbdbc'),
                               size: 25.0,
                             ),
                           ],
