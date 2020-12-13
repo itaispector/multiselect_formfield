@@ -75,7 +75,7 @@ class MultiSelectFormField extends FormField<dynamic> {
           autovalidate: autovalidate,
           builder: (FormFieldState<dynamic> state) {
             return Opacity(
-                opacity: enabled ? 1.0 : 0.5,
+                opacity: enabled ? 1.0 : 1.0,
                 child: InkWell(
                   onTap: !enabled
                       ? null
@@ -155,7 +155,9 @@ class MultiSelectFormField extends FormField<dynamic> {
                               ),
                             Icon(
                               Icons.arrow_drop_down,
-                              color: Colors.black87,
+                              color: enabled
+                                  ? Color.fromARGB(255, 380, 380, 380)
+                                  : Color.fromARGB(255, 741, 741, 741),
                               size: 25.0,
                             ),
                           ],
