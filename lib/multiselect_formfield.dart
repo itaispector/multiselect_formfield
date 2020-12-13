@@ -30,6 +30,8 @@ class MultiSelectFormField extends FormField<dynamic> {
   final EdgeInsets contentPadding;
   final String label;
   final String displayString;
+  final TextStyle dialogCancelStyle;
+  final TextStyle dialogOKStyle;
 
   MultiSelectFormField(
       {FormFieldSetter<dynamic> onSaved,
@@ -63,6 +65,8 @@ class MultiSelectFormField extends FormField<dynamic> {
       this.checkBoxCheckColor,
       this.label,
       this.displayString,
+      this.dialogCancelStyle,
+      this.dialogOKStyle,
       this.contentPadding = const EdgeInsets.all(16)})
       : super(
           onSaved: onSaved,
@@ -91,16 +95,17 @@ class MultiSelectFormField extends FormField<dynamic> {
                             context: state.context,
                             builder: (BuildContext context) {
                               return MultiSelectDialog(
-                                title: title,
-                                okButtonLabel: okButtonLabel,
-                                cancelButtonLabel: cancelButtonLabel,
-                                items: items,
-                                initialSelectedValues: initialSelected,
-                                labelStyle: dialogTextStyle,
-                                dialogShapeBorder: dialogShapeBorder,
-                                checkBoxActiveColor: checkBoxActiveColor,
-                                checkBoxCheckColor: checkBoxCheckColor,
-                              );
+                                  title: title,
+                                  okButtonLabel: okButtonLabel,
+                                  cancelButtonLabel: cancelButtonLabel,
+                                  items: items,
+                                  initialSelectedValues: initialSelected,
+                                  labelStyle: dialogTextStyle,
+                                  dialogShapeBorder: dialogShapeBorder,
+                                  checkBoxActiveColor: checkBoxActiveColor,
+                                  checkBoxCheckColor: checkBoxCheckColor,
+                                  dialogCancelStyle: dialogCancelStyle,
+                                  dialogOKStyle: dialogOKStyle);
                             },
                           );
 

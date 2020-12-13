@@ -99,6 +99,26 @@ class _MyHomePageState extends State<MyHomePage> {
                       "display": "Football Practice",
                       "value": "Football Practice",
                     },
+                    {
+                      "display": "Walking",
+                      "value": "walking",
+                    },
+                    {
+                      "display": "Swimming",
+                      "value": "Swimming",
+                    },
+                    {
+                      "display": "Soccer Practice",
+                      "value": "Soccer Practice",
+                    },
+                    {
+                      "display": "Baseball Practice",
+                      "value": "Baseball Practice",
+                    },
+                    {
+                      "display": "Football Practice",
+                      "value": "Football Practice",
+                    },
                   ],
                   textField: 'display',
                   valueField: 'value',
