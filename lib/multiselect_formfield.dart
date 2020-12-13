@@ -117,15 +117,16 @@ class MultiSelectFormField extends FormField<dynamic> {
                         },
                   child: InputDecorator(
                     decoration: InputDecoration(
-                      labelText: label,
-                      contentPadding: contentPadding,
-                      filled: true,
-                      errorText: state.hasError ? state.errorText : null,
-                      errorMaxLines: 4,
-                      fillColor:
-                          fillColor ?? Theme.of(state.context).canvasColor,
-                      border: border ?? UnderlineInputBorder(),
-                    ),
+                        labelText: label,
+                        contentPadding: contentPadding,
+                        filled: true,
+                        errorText: state.hasError ? state.errorText : null,
+                        errorMaxLines: 4,
+                        fillColor:
+                            fillColor ?? Theme.of(state.context).canvasColor,
+                        border: border ?? UnderlineInputBorder(),
+                        enabledBorder: border ?? UnderlineInputBorder(),
+                        disabledBorder: border ?? UnderlineInputBorder()),
                     isEmpty: state.value == null || state.value == '',
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
